@@ -76,7 +76,7 @@ class RealPhoto(models.Model):
         path = datetime.strftime(datetime.now(), "real/%Y%m%d%H%M%S")
         return path + ext
 
-    objects = models.ForeignKey(Real, on_delete=models.CASCADE, verbose_name="Объект")
+    object = models.ForeignKey(Real, on_delete=models.CASCADE, verbose_name="Объект")
     photo = models.ImageField(upload_to=file_path, verbose_name="дополнительное фото")
 
     def delete(self, *args, **kwargs):
@@ -104,9 +104,9 @@ class Feedback(models.Model):
 
     name = models.CharField(max_length=128, null=True, blank=False, verbose_name="Имя")
     email = models.EmailField(null=True, blank=True, verbose_name="email")
-    phoneNumberRegex = RegexValidator(radex=r"\+?1?\d{8,15}$")
+    phoneNumberRegex = RegexValidator(regex=r"^\+?1?\d{8,15}$")
     phone = models.CharField(validators=[phoneNumberRegex], max_length=20, null=True, blank=True, verbose_name="Телефон")
-    objects = models.ForeignKey(Real, models.DO_NOTHING, null=True, blank=True, verbose_name="Объект")
+    object = models.ForeignKey(Real, models.DO_NOTHING, null=True, blank=True, verbose_name="Объект")
     message = models.TextField(null=True, blank=False, verbose_name="Сообщение")
     NEW = "N"
     IN_PROGRESS = "W"
